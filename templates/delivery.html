@@ -1,0 +1,46 @@
+{% extends 'base2.html' %}
+
+{% block title %}
+<title>Delivery Locations</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Delivery Locations</h1>
+    <!-- Form to add new delivery locations -->
+    <form method="post" action="{% url 'delivery' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Add Location</button>
+    </form>
+    <hr>
+    <h2 class="mt-4">Existing Locations</h2>
+    <!-- Editable Table -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Price (₦)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for delivery in deliveries %}
+            <tr>
+                <form method="post" action="{% url 'delivery' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="delivery_id" value="{{ delivery.id }}">
+                    <td>{{ delivery.location }}</td>
+                    <td>
+                        <input type="number" name="price" value="{{ delivery.price }}" step="0.01" class="form-control">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends "base2.html" %}
+
+{% block title %}
+<title>Order List</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Order List</h1>
+    <table class="table table-bordered table-striped mt-4">
+        <thead class="thead-dark">
+            <tr>
+                <th>Ref ID</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Grain</th>
+                <th>Amount (kg)</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>
+                    <a href="{% url 'order_detail' order.ref_id %}">{{ order.ref_id }}</a>
+                </td>
+                <td>{{ order.name }}</td>
+                <td>{{ order.phone_number }}</td>
+                <td>{{ order.email }}</td>
+                <td>{{ order.grain.name }}</td>
+                <td>{{ order.amount_kg }}</td>
+                <td>{{ order.status }}</td>
+                <td>
+                    {% if order.status == "pending" %}
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                        <button type="submit" class="btn btn-success btn-sm">Mark as Completed</button>
+                    </form>
+                    {% else %}
+                    <span class="text-success">Completed</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

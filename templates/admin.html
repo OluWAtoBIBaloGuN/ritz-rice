@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{%load static%}
+{%block title%}
+<title> Admin </title>
+{%endblock%}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="col-md-4">
+        <h1 class="text-center">Admin Login</h1>
+        <form method="post" action="{% url 'admin' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                {{ form.username|add_class:"form-control form-control-sm" }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {{ form.password|add_class:"form-control form-control-sm" }}
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </div>
+        </form>
+
+        {% if messages %}
+        <div id="message-container" class="mt-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('message-container').style.display = 'none';
+            }, 3000); // Disappears after 3 seconds
+        </script>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,90 @@
+{% extends "base2.html" %}
+
+{% block title %}
+<title>Order Details</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">Order Details</h1>
+            
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th class="bg-light" style="width: 30%">Ref ID</th>
+                                <td>{{ order.ref_id }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Name</th>
+                                <td>{{ order.name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Phone Number</th>
+                                <td>{{ order.phone_number }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Email</th>
+                                <td>{{ order.email }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Grain</th>
+                                <td>{{ order.grain.name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Amount (kg)</th>
+                                <td>{{ order.amount_kg }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Status</th>
+                                <td>
+                                    {% if order.status == "pending" %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Completed</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Order Date</th>
+                                <td>{{ order.order_date }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Expected Delivery Date</th>
+                                <td>{{ order.expected_delivery_date }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary me-2" onclick="window.print()">
+                    <i class="bi bi-printer"></i> Print Order
+                </button>
+                <a href="{% url 'orderlist' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Orders
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        .btn {
+            display: none;
+        }
+        .card {
+            border: none;
+        }
+        .bg-light {
+            background-color: #f8f9fa !important;
+            -webkit-print-color-adjust: exact;
+        }
+    }
+</style>
+{% endblock content %}

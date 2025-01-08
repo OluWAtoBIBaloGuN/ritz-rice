@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{%load static%}
+{%block title%}
+    <title> Welcome to RitzRice </title>
+{%endblock%}
+
+{%block content%}
+    <div class="container">
+        <div class="row mt-2">
+        
+     <div class="col-lg-4">
+     <img src="{%static 'img/imghome_3.jpg'%}" alt="Notes" width="350" height="250">
+     </div>
+     
+      <div class="col-lg-4">
+      <img src="{%static 'img/imghome_2.jpg'%}" alt="Notes" width="350" height="250">
+      </div>
+      
+       <div class="col-lg-4">
+       <img src="{%static 'img/imghome_1_1.jpg'%}" alt="Notes" width="350" height="250">
+       </div>
+       
+        </div> 
+        <div class="row mt-2">
+        <div class="col-md-6 offset-md-3">
+        <center><p><h8>From Nigerian Farms to Your Table: Pure, Natural, and equisite</h8></p></center>
+        <center><p><h6>Premium Long Grain Excellence, Naturally Preserved</h6></p></center>
+        <center><p><h5>Pure Nigerian Goodness-No Stones or Chemicals, Just Rice</h5></p></center>
+        
+        <center><a href="{% url 'order' %}"><button type="button" class="btn btn-success btn-lg">Place an order</button></center></a>
+    </div>
+        
+        </div>
+    </div>
+{%endblock content%}
