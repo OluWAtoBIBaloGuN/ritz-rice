@@ -3,6 +3,16 @@ from django.core.validators import MinValueValidator
 from django.utils.timezone import now
 import random
 import string
+from datetime import date
+
+# Constants
+TRANSACTION_TYPES = [
+    ('grain_purchase', 'Grain Purchase'),
+    ('winnowing', 'Winnowing'),
+    ('threshing', 'Threshing'),
+    ('transport', 'Transport'),
+    ('warehousing', 'Warehousing'),
+]
 
 
 # Create your models here.
@@ -72,7 +82,7 @@ class Customers(models.Model):
     
 
 
-class Clients(models.Model):
+class Client(models.Model):
     organization_name = models.CharField(max_length=255)
     representative = models.CharField(max_length=255)
     email = models.EmailField()
@@ -83,5 +93,11 @@ class Clients(models.Model):
 
     def __str__(self):
         return self.organization_name
+    
+class Transaction(models.Model):
+    transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPES)
+    transaction_date = models.DateField()
+    transacting_org = models.ForeignKey('Client', on_delete=models.CASCADE)
 
-
+    def __str__(self):
+        return f"{self.transaction_type} on {self.transaction_date}"

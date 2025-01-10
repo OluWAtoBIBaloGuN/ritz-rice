@@ -21,6 +21,8 @@ urlpatterns = [
     path('order/<str:ref_id>/', views.order_detail_view, name='order_detail'),
     path('success/', views.success_view, name='success'),
     path('clients/', views.clients, name='clients'),
+    path('transactions/', views.record_transaction, name='transactions'),
+    path('statistics/', views.statistics_view, name='statistics'),
     
     
     

@@ -3,7 +3,7 @@ from .models import Grain
 from .models import GrainPrice
 from .models import Order
 from .models import Customers
-from .models import Clients
+from .models import Client, Transaction
 
 
 
@@ -13,5 +13,6 @@ admin.site.register(Grain)
 admin.site.register(GrainPrice)
 admin.site.register(Order)
 admin.site.register(Customers)
-admin.site.register(Clients)
+admin.site.register(Client)
+admin.site.register(Transaction)
 

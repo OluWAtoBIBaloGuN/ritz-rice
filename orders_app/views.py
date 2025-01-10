@@ -4,9 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .forms import LoginForm, DeliveryForm
-from .models import Grain, GrainPrice, Delivery, Clients
-from .forms import GrainForm
-from .forms import OrderForm, Order, CustomerForm, ClientForm
+from .models import Grain, GrainPrice, Delivery, Client
+from .forms import GrainForm, OrderForm, Order, CustomerForm, ClientForm, TransactionForm
+from django.db.models import Count
+from .models import Customers, Order, Transaction
 
 
 # Create your views here.
@@ -203,5 +204,52 @@ def clients(request):
         form = ClientForm()
 
     return render(request, 'clients.html', {'form': form})
+ 
+
+def record_transaction(request):
+    if request.method == "POST":
+        form = TransactionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Replace 'home' with the appropriate URL name
+    else:
+        form = TransactionForm()
+    
+    return render(request, 'transactions.html', {'form': form})              
+
+
+
+def statistics_view(request):
+    # Pie chart: Gender demographics from Customers model
+    gender_data = Customers.objects.values('gender').annotate(count=Count('id'))
+    gender_labels = [item['gender'] for item in gender_data]
+    gender_counts = [item['count'] for item in gender_data]
+
+    # Bar chart: State of origin from Customers model
+    state_data = Customers.objects.values('state_of_residence').annotate(count=Count('id'))
+    state_labels = [item['state_of_residence'] for item in state_data]
+    state_counts = [item['count'] for item in state_data]
+
+    # Bar chart: Type of grain bought from Orders model
+    grain_data = Order.objects.values('grain__name').annotate(count=Count('id'))
+    grain_labels = [item['grain__name'] for item in grain_data]
+    grain_counts = [item['count'] for item in grain_data]
+
+    # Bar chart: Count of business done by transacting org from Transactions model
+    org_data = Transaction.objects.values('transacting_org__organization_name').annotate(count=Count('id'))
+    org_labels = [item['transacting_org__organization_name'] for item in org_data]
+    org_counts = [item['count'] for item in org_data]
+
+    context = {
+        'gender_labels': gender_labels,
+        'gender_counts': gender_counts,
+        'state_labels': state_labels,
+        'state_counts': state_counts,
+        'grain_labels': grain_labels,
+        'grain_counts': grain_counts,
+        'org_labels': org_labels,
+        'org_counts': org_counts,
+    }
+    return render(request, 'statistics.html', context)
 
 

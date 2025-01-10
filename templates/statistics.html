@@ -1,0 +1,93 @@
+{% extends 'base2.html' %}
+{% block title %}
+<title>Statistics</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Statistics</h1>
+
+    <!-- Pie Chart: Gender Demographics -->
+    <div class="mb-5">
+        <h3 class="text-center">Gender Demographics</h3>
+        <canvas id="genderPieChart" style="width: 300px; height: 300px; margin: auto;"></canvas>
+    </div>
+
+    <!-- Bar Chart: State of Origin -->
+    <div class="mb-5">
+        <h3 class="text-center">State of Residence</h3>
+        <canvas id="stateBarChart" style="width: 400px; height: 300px; margin: auto;"></canvas>
+    </div>
+
+    <!-- Bar Chart: Type of Grain Bought -->
+    <div class="mb-5">
+        <h3 class="text-center">Type of Grain Bought</h3>
+        <canvas id="grainBarChart" style="width: 400px; height: 300px; margin: auto;"></canvas>
+    </div>
+
+    <!-- Bar Chart: Count of Business by Transacting Org -->
+    <div class="mb-5">
+        <h3 class="text-center">Transactions by Organization</h3>
+        <canvas id="orgBarChart" style="width: 400px; height: 300px; margin: auto;"></canvas>
+    </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Pie Chart: Gender Demographics
+    const genderCtx = document.getElementById('genderPieChart').getContext('2d');
+    new Chart(genderCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ gender_labels|safe }},
+            datasets: [{
+                data: {{ gender_counts|safe }},
+                backgroundColor: ['#FF6384', '#36A2EB']
+            }]
+        }
+    });
+
+    // Bar Chart: State of Residence
+    const stateCtx = document.getElementById('stateBarChart').getContext('2d');
+    new Chart(stateCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ state_labels|safe }},
+            datasets: [{
+                data: {{ state_counts|safe }},
+                backgroundColor: '#36A2EB'
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // Bar Chart: Type of Grain Bought
+    const grainCtx = document.getElementById('grainBarChart').getContext('2d');
+    new Chart(grainCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ grain_labels|safe }},
+            datasets: [{
+                data: {{ grain_counts|safe }},
+                backgroundColor: '#FFCE56'
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // Bar Chart: Transactions by Organization
+    const orgCtx = document.getElementById('orgBarChart').getContext('2d');
+    new Chart(orgCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ org_labels|safe }},
+            datasets: [{
+                data: {{ org_counts|safe }},
+                backgroundColor: '#4BC0C0'
+            }]
+        },
+        options: { responsive: true }
+    });
+</script>
+{% endblock content %}

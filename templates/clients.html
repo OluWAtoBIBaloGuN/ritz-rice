@@ -1,16 +1,56 @@
-{% extends 'base2.html' %}
+{% extends 'base2.html' %} 
 
 {% block title %}
     <title>Register Client</title>
 {% endblock title %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1>Register a New Client</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- Render the form using Django's form helper -->
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-4 shadow-lg rounded" style="max-width: 600px; width: 100%;">
+        <h2 class="text-center mb-4 text-primary">Register a New Client</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Form Fields -->
+            <div class="mb-3">
+                <label for="{{ form.organization_name.id_for_label }}" class="form-label">Organization Name</label>
+                {{ form.organization_name }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.representative.id_for_label }}" class="form-label">Representative</label>
+                {{ form.representative }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                {{ form.email }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.phone_number.id_for_label }}" class="form-label">Phone Number</label>
+                {{ form.phone_number }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                {{ form.address }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.state.id_for_label }}" class="form-label">State</label>
+                {{ form.state }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
+                {{ form.country }}
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary py-2">Submit</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock content %}

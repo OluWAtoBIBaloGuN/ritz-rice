@@ -3,8 +3,7 @@ from .models import GrainPrice
 from .models import Grain
 from .models import Delivery, Order
 from .models import Customers
-from .models import Clients
-
+from .models import Client, Transaction
 
 
 
@@ -74,5 +73,15 @@ class CustomerForm(forms.ModelForm):
 
 class ClientForm(forms.ModelForm):
     class Meta:
-        model = Clients
+        model = Client
         fields = ['organization_name', 'representative', 'email', 'phone_number', 'address', 'state', 'country']
+
+
+class TransactionForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ['transaction_type', 'transaction_date', 'transacting_org']
+        widgets = {
+            'transaction_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+        
